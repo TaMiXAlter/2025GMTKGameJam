@@ -16,7 +16,7 @@ public class GameSystem : MonoBehaviour
     }
     void Start()
     {
-        data = beatMapReader.Read("Assets/Beatmap/Gamejam_BeatMap.csv");
+        data = beatMapReader.Read("Assets/Beatmap/Gamejam_BeatMap - test2.csv");
         // AudioSystem.Get().OnPlay.AddListener(BeatMapTestLog);
         AudioSystem.Get().OnPlay.AddListener(StartSpawn);
         AudioSystem.Get().TryPlay();

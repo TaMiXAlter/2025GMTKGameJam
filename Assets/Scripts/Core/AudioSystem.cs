@@ -23,7 +23,7 @@ public class AudioSystem : MonoBehaviour
         instance = this;
         AudioSource = GetComponent<AudioSource>();
 
-        bpm = 150;
+        bpm = 120;
     }
 
     public void TryPlay()

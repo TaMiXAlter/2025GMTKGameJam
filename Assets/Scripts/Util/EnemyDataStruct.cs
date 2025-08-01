@@ -1,7 +1,9 @@
-public enum EnemyType {
+public enum EnemyType
+{
     Normal = 0,
     Helmet,
-    Underwear
+    Underwear,
+    Null
 }
 public class EnemyData
 {
