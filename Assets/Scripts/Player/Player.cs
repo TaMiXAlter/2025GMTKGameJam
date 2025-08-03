@@ -23,15 +23,14 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
-        if (scrollDelta == 0) return;
-
         AttackType attack = AttackType.Miss;
-        if (scrollDelta > 0) attack = AttackType.Front;
-        if (scrollDelta < 0) attack = AttackType.Back;
+        CheckScroll(ref attack);
+        CheckClick(ref attack);
+        
+        if (attack == AttackType.Miss) return;
         playerAnimation.Jump(attack);
         jumpRope.Jump(attack);
-        
+
         if (playerTrigger.isAcceptInput && playerTrigger.Target != null)
         {
             playerTrigger.Target.OnHit(attack);
@@ -39,6 +38,23 @@ public class Player : MonoBehaviour
             playerTrigger.Target = null;
             playerTrigger.isAcceptInput = false;
         }
+    }
+
+    void CheckScroll(ref AttackType attack)
+    {
+        float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
+        if (scrollDelta == 0) return;
+        if (scrollDelta > 0) attack = AttackType.Front;
+        if (scrollDelta < 0) attack = AttackType.Back;
+    }
+
+    void CheckClick(ref AttackType attack)
+    {
+        if (Input.GetMouseButtonDown(0))
+            attack = AttackType.Left;
+
+        if (Input.GetMouseButtonDown(1))
+            attack = AttackType.Right;
     }
    
 }

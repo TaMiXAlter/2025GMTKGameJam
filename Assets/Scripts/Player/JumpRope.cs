@@ -6,7 +6,7 @@ class JumpRope : MonoBehaviour
     [SerializeField]  float Force = 5.0f;
     private Rope rope;
     bool isJumping = false;
-    float jumpDuration = .3f;
+    float jumpDuration = .15f;
 
     private float time = 0;
     private float swingDirection = 0;
@@ -57,17 +57,8 @@ class JumpRope : MonoBehaviour
     public void Jump(AttackType attackType)
     {
         if (time != 0) return;
-        switch (attackType)
-        {
-            case AttackType.Front:
-                swingDirection = -1;
-                break;
-            case AttackType.Back:
-                swingDirection = 1;
-                break;
-            default:
-                break;
-        }
+        swingDirection = -1;
+        if (attackType == AttackType.Back) swingDirection = 1;
         time = 0;
         isJumping = true;
     }

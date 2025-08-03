@@ -3,6 +3,8 @@ public enum EnemyType
     Normal = 0,
     Helmet,
     Underwear,
+    Right,
+    Left,
     Null
 }
 public class EnemyData

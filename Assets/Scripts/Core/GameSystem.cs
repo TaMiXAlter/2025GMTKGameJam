@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameSystem : MonoBehaviour
@@ -9,6 +10,7 @@ public class GameSystem : MonoBehaviour
     private BeatMapReader beatMapReader;
     private EnemySpawner enemySpawner;
     private Queue<EnemyData> data;
+    public string FileName="Tutorial.csv";
     void Awake()
     {
         beatMapReader = gameObject.AddComponent<BeatMapReader>();
@@ -16,14 +18,25 @@ public class GameSystem : MonoBehaviour
     }
     void Start()
     {
-        data = beatMapReader.Read("Assets/Beatmap/Gamejam_BeatMap - test2.csv");
-        // AudioSystem.Get().OnPlay.AddListener(BeatMapTestLog);
-        AudioSystem.Get().OnPlay.AddListener(StartSpawn);
-        AudioSystem.Get().TryPlay();
+        beatMapReader.ReadAsync(FileName, PlayOnLoaded);
     }
     void StartSpawn(float bpm)
     {
         enemySpawner.StartSpawnEnemy(bpm, data);
+    }
+    void Finish()
+    {
+        ScoreSystem.Get().ShowHitRate();
+    }
+    void PlayOnLoaded(Queue<EnemyData> readDatas)
+    {
+        data = readDatas;
+        // AudioSystem.Get().OnPlay.AddListener(BeatMapTestLog);
+        AudioSystem.Get().OnPlay.AddListener(StartSpawn);
+        AudioSystem.Get().OnFinish.AddListener(Finish);
+
+        ScoreSystem.Get().SetMax(data.Count);
+        AudioSystem.Get().TryPlay();
     }
     #region "Test"
     void BeatMapTestLog(float time)

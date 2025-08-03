@@ -2,5 +2,7 @@ public enum AttackType
 {
     Miss,
     Front,
-    Back
+    Back,
+    Right,
+    Left
 }
